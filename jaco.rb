@@ -92,7 +92,8 @@ def play_chain(chain)
   chain.each do |phrase|
     phrases[phrase[0]].each do |note|
       if note[0]
-        wob note[0] + phrase[1] + transpo, 1, 0.25
+        # wob note[0] + phrase[1] + transpo, 1, 0.25
+        play note[0] + phrase[1] + transpo, attack: 0, release: 0.25, cutoff: rrand(50, 65)
       else
         # nil <=> not playing anything, it's a silence
       end
@@ -124,7 +125,6 @@ C |----------------|----------------|----------------|----------------|
 hh|x---x---x---x---|x---x---x---x---|x---x---x---x---|x---x---x---x---|
 S |----o--g------o-|-o--o--g----o---|----o--g------o-|-o--o--g----o---|
 B |o---------o-----|--oo----o-o-----|o---------o-----|--oo----o-o-----|
-  |1e+a2e+a3e+a4e+a|1e+a2e+a3e+a4e+a|1e+a2e+a3e+a4e+a|1e+a2e+a3e+a4e+a|
 }
 
 # reduce to just essential characters

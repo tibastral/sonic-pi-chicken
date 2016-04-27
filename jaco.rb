@@ -39,19 +39,21 @@ def drum_lines(text)
 end
 
 def play_tab(drum_lines)
-  tab_length = drum_lines.first.length
-  tab_length.times do |i|
+  drum_lines.first.length.times do |i|
     beat drum_lines.map {|row| row[i] }
     sleep D
   end
 end
 
-def play_chain(song, pos)
-  transpo = -2 # Bb
+def bass(note)
+  play note, attack: 0, release: 0.25, cutoff: rrand(50, 65)
+end
+
+def play_chain(song, pos, transpo)
   song[:chains][pos].each do |phrase|
     song[:phrases][phrase[0]].each do |note|
       if note[0]
-        play note[0] + phrase[1] + transpo, attack: 0, release: 0.25, cutoff: rrand(50, 65)
+        bass note[0] + phrase[1] + transpo
       else
         # nil <=> not playing anything, it's a silence
       end
@@ -110,7 +112,8 @@ use_bpm BPM
 live_loop :bass do
   use_synth :tb303
 
-  play_chain(CHICKEN_BASS, 0)
+  # transpo => -2 : Bb
+  play_chain(CHICKEN_BASS, 0, -2)
 end
 
 live_loop :battery do

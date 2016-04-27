@@ -1,15 +1,30 @@
 # https://speakerdeck.com/xavriley/dubstep-in-ruby-with-sonic-pi
 
+DRUMS = [
+  :drum_splash_hard,
+  :drum_cymbal_closed,
+  :drum_snare_hard,
+  :drum_heavy_kick
+]
+
+NP = 1.5
+N = 1
+C = 0.5
+D = 0.25
+CP = 0.75
+
+BPM = 120.0
+
 def beat(tab)
-  sample :drum_splash_hard if tab[0]
-  sample :drum_cymbal_closed if tab[1]
-  sample :drum_snare_hard if tab[2]
-  sample :drum_heavy_kick if tab[3]
+  tab.each_with_index do |val, i|
+    sample DRUMS[i] if val
+  end
 end
 
+# reduce tabs to just essential characters
+# in this case 'x', 'o', 'g', - (hyphen) and line break
+# map to tabs of tabs of booleans
 def drum_lines(text)
-  # reduce to just essential characters
-  # in this case 'x', 'o', 'g', - (hyphen) and line break
   text
   .strip
   .gsub!(/[^\-xog\n]/, '')
@@ -23,11 +38,10 @@ def drum_lines(text)
   end
 end
 
-def play_tab(the_tab)
-  tab = drum_lines(the_tab)
-  tab_length = tab.first.length
+def play_tab(drum_lines)
+  tab_length = drum_lines.first.length
   tab_length.times do |i|
-    beat tab.map {|row| row[i] }
+    beat drum_lines.map {|row| row[i] }
     sleep D
   end
 end
@@ -45,12 +59,6 @@ def play_chain(song, pos)
     end
   end
 end
-
-NP = 1.5
-N = 1
-C = 0.5
-D = 0.25
-CP = 0.75
 
 CHICKEN_BASS = {
   phrases: [
@@ -98,7 +106,6 @@ S |----o--g------o-|-o--o--g----o---|----o--g------o-|-o--o--g----o---|
 B |o---------o-----|--oo----o-o-----|o---------o-----|--oo----o-o-----|
 }
 
-BPM = 120.0
 use_bpm BPM
 
 live_loop :bass do
@@ -108,5 +115,5 @@ live_loop :bass do
 end
 
 live_loop :battery do
-  play_tab(COLD_SWEAT_TAB)
+  play_tab(drum_lines(COLD_SWEAT_TAB))
 end

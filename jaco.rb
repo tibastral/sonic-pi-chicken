@@ -98,8 +98,7 @@ CHICKEN_BASS = {
   ]]
 }
 
-# This is a random tab for the drum intro to "Cold Sweat" by James Brown
-COLD_SWEAT_TAB = %Q{
+CHICKEN_TAB = %Q{
 C |----------------|----------------|----------------|----------------|
 R |x---x---x---x---|x---x---x---x---|x---x---x---x---|x---x---x---x---|
 S |----o--g------o-|-o--o--g----o---|----o--g------o-|-o--o--g----o---|
@@ -115,5 +114,5 @@ live_loop :bass do
 end
 
 live_loop :battery do
-  play_tab(drum_lines(COLD_SWEAT_TAB))
+  play_tab(drum_lines(CHICKEN_TAB))
 end

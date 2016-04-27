@@ -28,7 +28,7 @@ def drum_lines(text)
   text
   .strip
   .gsub!(/[^\-xog\n]/, '')
-  .lines
+  .split(/\n+/)
   .map do |line|
     line
     .chars
